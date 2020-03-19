@@ -1,7 +1,25 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './App.scss';
 
-function Calculator() {
+import Button from './Button';
+
+function Calculator () {
+	const [result, setResult] = useState(0);
+
+	function initializeButtons () {
+		const arr = [];
+		for (let i = 0; i <= 9; i++) {
+			arr.push(
+				<Button handler={inputHandler} value={i}/>
+			);
+		}
+		return arr;
+	}
+
+	function inputHandler(value) {
+		setResult(value);
+	}
+
     return (
         <div className="section has-background-black">
             <div className="hero is-fullheight">
@@ -10,53 +28,18 @@ function Calculator() {
 				        <div className="columns is-centered">
                             <div className="column is-half-desktop is-three-quarters-tablet">
                                     <div className="container">
-                                        <div className="columns is-multiline is-half-desktop is-centered">
-                                            <div className="column">
-                                                <button className="button is-primary">agagg</button>
-                                            </div>
-                                            <div className="column">
-                                                <button className="button is-primary">agagg</button>
-                                            </div>
-                                            <div className="column">
-                                                <button className="button is-primary">agagg</button>
-                                            </div>
-                                            <div className="column">
-                                                <button className="button is-primary">agagg</button>
-                                            </div>
-                                            <div className="column">
-                                                <button className="button is-primary">agagg</button>
-                                            </div>
-                                            <div className="column">
-                                                <button className="button is-primary">agagg</button>
-                                            </div>
-                                            <div className="column">
-                                                <button className="button is-primary">agagg</button>
-                                            </div>
-                                            <div className="column">
-                                                <button className="button is-primary">agagg</button>
-                                            </div>
-                                            <div className="column">
-                                                <button className="button is-primary">agagg</button>
-                                            </div>
-                                            <div className="column">
-                                                <button className="button is-primary">agagg</button>
-                                            </div>
-                                            <div className="column">
-                                                <button className="button is-primary">agagg</button>
-                                            </div>
-                                            <div className="column">
-                                                <button className="button is-primary">agagg</button>
-                                            </div>
-                                            <div className="column">
-                                                <button className="button is-primary">agagg</button>
-                                            </div>
-                                            <div className="column">
-                                                <button className="button is-primary">agagg</button>
-                                            </div>
-                                            <div className="column">
-                                                <button className="button is-primary">agagg</button>
-                                            </div>
-                                        </div>
+										<div className="field">
+											<div className="control">
+												<input readonly className="input" type="text" value={result} />
+											</div>
+										</div>
+										<div className="field">
+											<div className="control">
+												<div className="columns is-multiline is-centered">
+                                            		{initializeButtons()}
+                                        		</div>
+											</div>
+										</div>
                                     </div>
                             </div>
                         </div>
