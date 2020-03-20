@@ -104,9 +104,17 @@ function Calculator () {
 				setHistory('');
 				setResult(0);
 				break;
+			case 'B':
+				if (!isOp(history[history.length - 1])) {
+					setHistory(history.slice(0, history.length - 1));
+					setResult(Math.floor(result / 10));
+				}
+				break;
 			case 'CE':
+				if (!isOp(history[history.length - 1])) {
+					setHistory(history.slice(0, history.length - result.toString().length));
+				}
 				setResult(0);
-				if (!isOp(history[history.length - 1])) setHistory(history.slice(0, history.length - 1));
 				break;
 			default:
 				setClicked(true);
@@ -144,6 +152,7 @@ function Calculator () {
 													<Button handler={opHandler} value="=" />
 													<Button handler={opHandler} value="C" />
 													<Button handler={opHandler} value="CE" />
+													<Button handler={opHandler} value="B" />
                                         		</div>
 											</div>
 										</div>
