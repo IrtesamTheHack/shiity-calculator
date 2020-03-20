@@ -5,19 +5,113 @@ import Button from './Button';
 
 function Calculator () {
 	const [result, setResult] = useState(0);
+	const [history, setHistory] = useState('');
+	const [opClicked, setClicked] = useState(false);
 
 	function initializeButtons () {
 		const arr = [];
 		for (let i = 0; i <= 9; i++) {
 			arr.push(
-				<Button handler={inputHandler} value={i}/>
+				<Button handler={numHandler} value={i}/>
 			);
 		}
 		return arr;
 	}
 
-	function inputHandler(value) {
-		setResult(value);
+	function numHandler (value) {
+		if (result === 0 || opClicked) {
+			setResult(value);
+			setClicked(false);
+		}
+		else {
+			setResult(result * 10 + value);
+		}
+		setHistory(history + value);
+	}
+
+	function isOp (char) {
+		switch (char) {
+			case '+':
+				return true;
+			case '-':
+				return true;
+			case '*':
+				return true;
+			case '/':
+				return true;
+			case '%':
+				return true;
+			default:
+				return false;
+
+		}
+	}
+
+	function opHandler (op) {
+		if (history === '') return;
+		switch (op) {
+			case '+':
+				if (!isOp(history[history.length - 2])) setHistory(history + ' + ');
+				else {
+					setHistory(history.slice(0, history.length - 2) + '+ ');
+					break;
+				}
+				setClicked(true);
+				setResult(eval(history));
+				break;
+			case '-':
+				if (!isOp(history[history.length - 2])) setHistory(history + ' - ');
+				else {
+					setHistory(history.slice(0, history.length - 2) + '- ');
+					break;
+				}
+				setClicked(true);
+				setResult(eval(history));
+				break;
+			case '*':
+				if (!isOp(history[history.length - 2])) setHistory(history + ' * ');
+				else {
+					setHistory(history.slice(0, history.length - 2) + '* ');
+					break;
+				}
+				setClicked(true);
+				setResult(eval(history));
+				break;
+			case '/':
+				if (!isOp(history[history.length - 2])) setHistory(history + ' / ');
+				else {
+					setHistory(history.slice(0, history.length - 2) + '/ ');
+					break;
+				}
+				setClicked(true);
+				setResult(eval(history));
+				break;
+			case '%':
+				if (!isOp(history[history.length - 2])) setHistory(history + ' % ');
+				else {
+					setHistory(history.slice(0, history.length - 2) + '% ');
+					break;
+				}
+				setClicked(true);
+				setResult(eval(history));
+				break;
+			case '=':
+				setClicked(true);
+				setResult(eval(history));
+				setHistory('');
+				break;
+			case 'C':
+				setHistory('');
+				setResult(0);
+				break;
+			case 'CE':
+				setResult(0);
+				if (!isOp(history[history.length - 1])) setHistory(history.slice(0, history.length - 1));
+				break;
+			default:
+				setClicked(true);
+				break;
+		}
 	}
 
     return (
@@ -30,13 +124,26 @@ function Calculator () {
                                     <div className="container">
 										<div className="field">
 											<div className="control">
-												<input readonly className="input" type="text" value={result} />
+												<label className="label">{history}</label>
+											</div>
+										</div>
+										<div className="field">
+											<div className="control">
+												<input readOnly className="input" type="text" value={result} />
 											</div>
 										</div>
 										<div className="field">
 											<div className="control">
 												<div className="columns is-multiline is-centered">
                                             		{initializeButtons()}
+													<Button handler={opHandler} value="+" />
+													<Button handler={opHandler} value="-" />
+													<Button handler={opHandler} value="*" />
+													<Button handler={opHandler} value="/" />
+													<Button handler={opHandler} value="%" />
+													<Button handler={opHandler} value="=" />
+													<Button handler={opHandler} value="C" />
+													<Button handler={opHandler} value="CE" />
                                         		</div>
 											</div>
 										</div>
