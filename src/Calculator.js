@@ -128,7 +128,7 @@ function Calculator () {
 		        <div className="hero-body">
 			        <div className="container">
 				        <div className="columns is-centered">
-                            <div className="column is-half-desktop is-three-quarters-tablet">
+                            <div className="column is-half-desktop is-three-quarters-tablet is-full-mobile">
                                     <div className="container">
 										<div className="field">
 											<div className="control">
